@@ -1,6 +1,6 @@
 {
   "name": "gendiff-234389",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "project-lvl2-s96",
   "bin": {
     "gendiff": "dist/bin/gendiff.js"
