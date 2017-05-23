@@ -1,6 +1,6 @@
 {
   "name": "gendiff-234389",
-  "version": "0.0.48",
+  "version": "0.0.49",
   "description": "project-lvl2-s96",
   "bin": {
     "gendiff": "dist/bin/gendiff.js"
@@ -24,7 +24,8 @@
   "homepage": "https://github.com/iskaldvind/project-lvl2-s96#readme",
   "dependencies": {
     "commander": "*",
-    "lodash": "*"
+    "lodash": "*",
+    "js-yaml": "*"
   },
   "devDependencies": {
     "babel-cli": "*",
@@ -40,7 +41,8 @@
     "commander": "*",
     "lodash": "*",
     "jest": "*",
-    "regenerator-runtime": "*"
+    "regenerator-runtime": "*",
+    "js-yaml": "*"
   },
   "jest": {
     "transformIgnorePatterns": [
