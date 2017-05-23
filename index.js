@@ -1,3 +1,3 @@
-const gendiff = require('./dist/compare');
+const gendiff = require('./dist/compare').default;
 
-exports.default = gendiff;
+module.exports = gendiff;
