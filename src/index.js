@@ -4,7 +4,7 @@ const program = require('commander');
 
 const main = () => {
   program
-    .version('0.0.32')
+    .version('0.0.33')
     .arguments('<firstConfig> <secondConfig>')
     .action((firstConfig, secondConfig) => {
       console.log(compareFiles(firstConfig, secondConfig));
