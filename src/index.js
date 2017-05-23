@@ -1,9 +1,9 @@
 import program from 'commander';
-import compareFiles from './compare';
+import compareFiles from './file-comparer';
 
 const main = () => {
   program
-    .version('0.0.40')
+    .version('0.0.45')
     .arguments('<firstConfig> <secondConfig>')
     .action((firstConfig, secondConfig) => {
       console.log(compareFiles(firstConfig, secondConfig));
