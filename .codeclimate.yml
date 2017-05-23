@@ -8,6 +8,7 @@ engines:
       - javascript
 exclude_paths:
 - "node_modules/"
+- "__tests__"
 ratings:
    paths:
    - "src/**"
