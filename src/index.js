@@ -1,10 +1,9 @@
+import program from 'commander';
 import compareFiles from './compare';
-
-const program = require('commander');
 
 const main = () => {
   program
-    .version('0.0.33')
+    .version('0.0.40')
     .arguments('<firstConfig> <secondConfig>')
     .action((firstConfig, secondConfig) => {
       console.log(compareFiles(firstConfig, secondConfig));
