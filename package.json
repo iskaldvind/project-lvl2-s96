@@ -1,6 +1,6 @@
 {
   "name": "gendiff-234389",
-  "version": "0.0.55",
+  "version": "0.0.57",
   "description": "project-lvl2-s96",
   "bin": {
     "gendiff": "dist/bin/gendiff.js"
@@ -26,7 +26,8 @@
   "dependencies": {
     "commander": "*",
     "lodash": "*",
-    "js-yaml": "*"
+    "js-yaml": "*",
+    "ini": "*"
   },
   "devDependencies": {
     "babel-cli": "*",
@@ -43,7 +44,8 @@
     "lodash": "*",
     "jest": "*",
     "regenerator-runtime": "*",
-    "js-yaml": "*"
+    "js-yaml": "*",
+    "ini": "*"
   },
   "jest": {
     "transformIgnorePatterns": [

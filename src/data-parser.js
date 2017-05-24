@@ -1,3 +1,4 @@
+import ini from 'ini';
 import yaml from 'js-yaml';
 
 const dataParser = (data, parser) => {
@@ -14,6 +15,9 @@ const parseDataRegisrty = {
   },
   yml(rawData) {
     return dataParser(rawData, yaml.load);
+  },
+  ini(rawData) {
+    return dataParser(rawData, ini.parse);
   },
 };
 
