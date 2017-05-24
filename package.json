@@ -1,6 +1,6 @@
 {
   "name": "gendiff-234389",
-  "version": "0.0.54",
+  "version": "0.0.55",
   "description": "project-lvl2-s96",
   "bin": {
     "gendiff": "dist/bin/gendiff.js"
@@ -48,13 +48,6 @@
   "jest": {
     "transformIgnorePatterns": [
       "/node_modules/"
-    ],
-    "collectCoverage": true,
-    "coverageDirectory": "__tests__/test_data/test_coverage",
-    "collectCoverageFrom": ["__tests__/*.*"],
-    "coverageReporters": [
-      "text",
-      "lcov"
     ]
   }
 }
