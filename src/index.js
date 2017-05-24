@@ -3,7 +3,7 @@ import compareFiles from './file-comparer';
 
 const main = () => {
   program
-    .version('0.0.51')
+    .version('0.0.52')
     .arguments('<firstConfig> <secondConfig>')
     .action((firstConfig, secondConfig) => {
       console.log(compareFiles(firstConfig, secondConfig));

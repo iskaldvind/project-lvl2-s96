@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
-const compareData = (...dataPair) => {
-  const [before, after] = [...dataPair];
+const compareData = (dataPair) => {
+  const [before, after] = dataPair;
   const propertiesBefore = Object.keys(before);
   const propertiesAfter = Object.keys(after);
   const propertiesUnion = _.union(propertiesBefore, propertiesAfter);
@@ -10,13 +10,14 @@ const compareData = (...dataPair) => {
       if (before[property] === after[property]) {
         return `    ${property}: ${before[property]}`;
       }
-      return `  + ${property}: ${after[property]}\n  - ${property}: ${before[property]}`;
+      return [`  + ${property}: ${after[property]}`, `  - ${property}: ${before[property]}`];
     } else if (property in before) {
       return `  - ${property}: ${before[property]}`;
     }
     return `  + ${property}: ${after[property]}`;
   });
-  return ['{', ...diffs, '}'].join('\n');
+  const flatDiffs = _.flatten(diffs);
+  return ['{', ...flatDiffs, '}'].join('\n');
 };
 
 export default compareData;

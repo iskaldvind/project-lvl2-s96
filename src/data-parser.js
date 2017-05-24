@@ -1,20 +1,22 @@
 import yaml from 'js-yaml';
 
-const parseData = {
-  json(...rawData) {
-    try {
-      return [...rawData].map(rawDataItem => JSON.parse(rawDataItem));
-    } catch (err) {
-      throw new Error('Unable to read file (missing or has wrong json format)!');
-    }
+const dataParser = (data, parser) => {
+  try {
+    return data.map(dataItem => parser(dataItem));
+  } catch (err) {
+    throw new Error('Unable to read file (missing or has wrong data format)');
+  }
+};
+
+const parseDataRegisrty = {
+  json(rawData) {
+    return dataParser(rawData, JSON.parse);
   },
-  yml(...rawData) {
-    try {
-      return [...rawData].map(rawDataItem => yaml.load(rawDataItem));
-    } catch (err) {
-      throw new Error('Unable to read file (missing or has wrong yml format)!');
-    }
+  yml(rawData) {
+    return dataParser(rawData, yaml.load);
   },
 };
+
+const parseData = extension => rawData => parseDataRegisrty[extension](rawData);
 
 export default parseData;
