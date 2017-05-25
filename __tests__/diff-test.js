@@ -1,6 +1,6 @@
 import gendiff from '../src/index';
 
-const validDiff = [
+const validDiffFlat = [
   '{',
   '    host: hexlet.io',
   '  + timeout: 20',
@@ -9,41 +9,66 @@ const validDiff = [
   '  + verbose: true',
   '}'].join('\n');
 
-const pathBefore = './__tests__/__fixtures__/before-';
-const pathAfter = './__tests__/__fixtures__/after-';
+const validDiffComplex = [
+  '{',
+  '    common: {',
+  '        setting1: Value 1',
+  '      - setting2: 200',
+  '        setting3: true',
+  '      - setting6: {',
+  '            key: value',
+  '        }',
+  '      + setting4: blah blah',
+  '      + setting5: {',
+  '            key5: value5',
+  '        }',
+  '    group1: {',
+  '      + baz: bars',
+  '      - baz: bas',
+  '        foo: bar',
+  '  - group2: {',
+  '        abc: 12345',
+  '    }',
+  '  + group3: {',
+  '        fee: 100500',
+  '    }',
+  '}'].join('\n');
 
-test('Should not throw an error with empty ini files', () => {
-  const iniBefore = `${pathBefore}t1.ini`;
-  const iniAfter = `${pathAfter}t1.ini`;
-  expect(gendiff(iniBefore, iniAfter)).toEqual('{\n}');
+const pathBefore = './__tests__/__fixtures__/';
+const pathAfter = './__tests__/__fixtures__/';
+
+test('Should work fine with flat ini files', () => {
+  const iniBefore = `${pathBefore}flat-before.ini`;
+  const iniAfter = `${pathAfter}flat-after.ini`;
+  expect(gendiff(iniBefore, iniAfter)).toEqual(validDiffFlat);
 });
 
-test('Should work fine with ini files', () => {
-  const iniBefore = `${pathBefore}t2.ini`;
-  const iniAfter = `${pathAfter}t2.ini`;
-  expect(gendiff(iniBefore, iniAfter)).toEqual(validDiff);
+test('Should work fine with complex ini files', () => {
+  const iniBefore = `${pathBefore}complex-before.ini`;
+  const iniAfter = `${pathAfter}complex-after.ini`;
+  expect(gendiff(iniBefore, iniAfter)).toEqual(validDiffComplex);
 });
 
-test('Should throw an error with empty json files', () => {
-  const jsonBefore = `${pathBefore}t1.json`;
-  const jsonAfter = `${pathAfter}t1.json`;
-  expect(() => gendiff(jsonBefore, jsonAfter)).toThrowError();
+test('Should work fine with flat json files', () => {
+  const jsonBefore = `${pathBefore}flat-before.json`;
+  const jsonAfter = `${pathAfter}flat-after.json`;
+  expect(gendiff(jsonBefore, jsonAfter)).toEqual(validDiffFlat);
 });
 
-test('Should work fine with json files', () => {
-  const jsonBefore = `${pathBefore}t2.json`;
-  const jsonAfter = `${pathAfter}t2.json`;
-  expect(gendiff(jsonBefore, jsonAfter)).toEqual(validDiff);
+test('Should work fine with complex json files', () => {
+  const jsonBefore = `${pathBefore}complex-before.json`;
+  const jsonAfter = `${pathAfter}complex-after.json`;
+  expect(gendiff(jsonBefore, jsonAfter)).toEqual(validDiffComplex);
 });
 
-test('Should throw an error with empty yml files', () => {
-  const ymlBefore = `${pathBefore}t1.yml`;
-  const ymlAfter = `${pathAfter}jt1.yml`;
-  expect(() => gendiff(ymlBefore, ymlAfter)).toThrowError();
+test('Should work fine with flat yml files', () => {
+  const ymlBefore = `${pathBefore}flat-before.yml`;
+  const ymlAfter = `${pathAfter}flat-after.yml`;
+  expect(gendiff(ymlBefore, ymlAfter)).toEqual(validDiffFlat);
 });
 
-test('Should work fine with yml files', () => {
-  const ymlBefore = `${pathBefore}t2.yml`;
-  const ymlAfter = `${pathAfter}t2.yml`;
-  expect(gendiff(ymlBefore, ymlAfter)).toEqual(validDiff);
+test('Should work fine with complex yml files', () => {
+  const ymlBefore = `${pathBefore}complex-before.yml`;
+  const ymlAfter = `${pathAfter}complex-after.yml`;
+  expect(gendiff(ymlBefore, ymlAfter)).toEqual(validDiffComplex);
 });

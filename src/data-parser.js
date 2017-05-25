@@ -1,13 +1,7 @@
 import ini from 'ini';
 import yaml from 'js-yaml';
 
-const dataParser = (data, parser) => {
-  try {
-    return data.map(dataItem => parser(dataItem));
-  } catch (err) {
-    throw new Error('Unable to parse data, assuming wrong format.');
-  }
-};
+const dataParser = (data, parser) => data.map(dataItem => parser(dataItem));
 
 const parseDataRegisrty = {
   json(rawData) {
