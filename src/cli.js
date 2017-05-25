@@ -3,7 +3,7 @@ import gendiff from './file-comparer';
 
 const main = () => {
   program
-    .version('0.0.61')
+    .version('0.0.62')
     .arguments('<firstConfig> <secondConfig>')
     .action((firstConfig, secondConfig) => {
       console.log(gendiff(firstConfig, secondConfig));
@@ -18,4 +18,3 @@ const main = () => {
 };
 
 export default main;
-
