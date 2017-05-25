@@ -1,6 +1,6 @@
 {
   "name": "gendiff-234389",
-  "version": "0.0.57",
+  "version": "0.0.59",
   "description": "project-lvl2-s96",
   "bin": {
     "gendiff": "dist/bin/gendiff.js"
@@ -49,7 +49,8 @@
   },
   "jest": {
     "transformIgnorePatterns": [
-      "/node_modules/"
+      "/node_modules/",
+      "/__tests__/__fixtures__/"
     ]
   }
 }
