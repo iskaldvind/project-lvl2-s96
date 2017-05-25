@@ -5,7 +5,7 @@ const dataParser = (data, parser) => {
   try {
     return data.map(dataItem => parser(dataItem));
   } catch (err) {
-    throw new Error('Unable to read file (missing or has wrong data format)');
+    throw new Error('Unable to parse data, assuming wrong format.');
   }
 };
 
