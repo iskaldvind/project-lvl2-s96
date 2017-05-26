@@ -1,7 +1,8 @@
 import path from 'path';
 import fs from 'fs';
 import parseData from './data-parser';
-import compareData from './data-comparer';
+import buildDiffAST from './ast-builder';
+import { printTree } from './ast-printer';
 
 const readFile = file => fs.readFileSync(file, 'utf-8');
 
@@ -11,7 +12,12 @@ const gendiff = (fileBefore, fileAfter) => {
     .map(file => readFile(file));
   const extension = path.extname(fileBefore).slice(1);
   const [dataBefore, dataAfter] = parseData(extension)(rawData);
-  return compareData(dataBefore, dataAfter);
+  const diffAST = buildDiffAST(dataBefore, dataAfter);
+  // console.log(diffAST);
+  return printTree(diffAST);
+  // console.log(diff);
+  // return compareData(dataBefore, dataAfter);
+  // return diff;
 };
 
 export default gendiff;

@@ -1,3 +1,4 @@
+import path from 'path';
 import gendiff from '../src/index';
 
 const validDiffFlat = [
@@ -22,10 +23,12 @@ const validDiffComplex = [
   '      + setting5: {',
   '            key5: value5',
   '        }',
+  '    }',
   '    group1: {',
   '      + baz: bars',
   '      - baz: bas',
   '        foo: bar',
+  '    }',
   '  - group2: {',
   '        abc: 12345',
   '    }',
@@ -34,41 +37,41 @@ const validDiffComplex = [
   '    }',
   '}'].join('\n');
 
-const pathBefore = './__tests__/__fixtures__/';
-const pathAfter = './__tests__/__fixtures__/';
+const fixturesDir = './__tests__/__fixtures__/';
 
 test('Should work fine with flat ini files', () => {
-  const iniBefore = `${pathBefore}flat-before.ini`;
-  const iniAfter = `${pathAfter}flat-after.ini`;
+  const iniBefore = path.join(fixturesDir, 'flat-before.ini');
+  const iniAfter = path.join(fixturesDir, 'flat-after.ini');
   expect(gendiff(iniBefore, iniAfter)).toEqual(validDiffFlat);
 });
 
 test('Should work fine with complex ini files', () => {
-  const iniBefore = `${pathBefore}complex-before.ini`;
-  const iniAfter = `${pathAfter}complex-after.ini`;
+  const iniBefore = path.join(fixturesDir, 'complex-before.ini');
+  const iniAfter = path.join(fixturesDir, 'complex-after.ini');
   expect(gendiff(iniBefore, iniAfter)).toEqual(validDiffComplex);
 });
 
 test('Should work fine with flat json files', () => {
-  const jsonBefore = `${pathBefore}flat-before.json`;
-  const jsonAfter = `${pathAfter}flat-after.json`;
+  const jsonBefore = path.join(fixturesDir, 'flat-before.json');
+  const jsonAfter = path.join(fixturesDir, 'flat-after.json');
   expect(gendiff(jsonBefore, jsonAfter)).toEqual(validDiffFlat);
 });
 
 test('Should work fine with complex json files', () => {
-  const jsonBefore = `${pathBefore}complex-before.json`;
-  const jsonAfter = `${pathAfter}complex-after.json`;
+  const jsonBefore = path.join(fixturesDir, 'complex-before.json');
+  const jsonAfter = path.join(fixturesDir, 'complex-after.json');
   expect(gendiff(jsonBefore, jsonAfter)).toEqual(validDiffComplex);
 });
 
 test('Should work fine with flat yml files', () => {
-  const ymlBefore = `${pathBefore}flat-before.yml`;
-  const ymlAfter = `${pathAfter}flat-after.yml`;
+  const ymlBefore = path.join(fixturesDir, 'flat-before.yml');
+  const ymlAfter = path.join(fixturesDir, 'flat-after.yml');
   expect(gendiff(ymlBefore, ymlAfter)).toEqual(validDiffFlat);
 });
 
 test('Should work fine with complex yml files', () => {
-  const ymlBefore = `${pathBefore}complex-before.yml`;
-  const ymlAfter = `${pathAfter}complex-after.yml`;
+  const ymlBefore = path.join(fixturesDir, 'complex-before.yml');
+  const ymlAfter = path.join(fixturesDir, 'complex-after.yml');
   expect(gendiff(ymlBefore, ymlAfter)).toEqual(validDiffComplex);
 });
+
