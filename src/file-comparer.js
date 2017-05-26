@@ -9,13 +9,8 @@ const validFormats = ['tree', 'plain'];
 const readFile = file => fs.readFileSync(file, 'utf-8');
 
 const gendiff = (...args) => {
-  console.log([args]);
-  const [format, fileBefore, fileAfter] = args.length === 3 ? [...args] : ['tree', ...args];
-  console.log('===>');
-  console.log(format);
-  console.log(fileBefore);
-  console.log(fileAfter);
-  console.log('<===');
+  const [passedFormat, fileBefore, fileAfter] = args.length === 3 ? args : ['tree', ...args];
+  const format = passedFormat !== undefined && validFormats.indexOf(passedFormat) !== -1 ? passedFormat : 'tree';
   const rawData = [fileBefore, fileAfter]
     .map(filepath => path.resolve(filepath))
     .map(file => readFile(file));
