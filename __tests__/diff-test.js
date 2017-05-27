@@ -55,7 +55,6 @@ const validDiffComplexPlain = [
 
 const fixturesDir = './__tests__/__fixtures__/';
 
-
 test('Should make valid Tree output with flat ini files', () => {
   const iniBefore = path.join(fixturesDir, 'flat-before.ini');
   const iniAfter = path.join(fixturesDir, 'flat-after.ini');
@@ -95,11 +94,11 @@ test('Should make valid Tree output with complex yml files', () => {
 test('Should make valid Plain output with flat json files', () => {
   const jsonBefore = path.join(fixturesDir, 'flat-before.json');
   const jsonAfter = path.join(fixturesDir, 'flat-after.json');
-  expect(gendiff('plain', jsonBefore, jsonAfter)).toEqual(validDiffFlatPlain);
+  expect(gendiff(jsonBefore, jsonAfter, 'plain')).toEqual(validDiffFlatPlain);
 });
 
 test('Should make valid Plain output with complex json files', () => {
   const jsonBefore = path.join(fixturesDir, 'complex-before.json');
   const jsonAfter = path.join(fixturesDir, 'complex-after.json');
-  expect(gendiff('plain', jsonBefore, jsonAfter)).toEqual(validDiffComplexPlain);
+  expect(gendiff(jsonBefore, jsonAfter, 'plain')).toEqual(validDiffComplexPlain);
 });

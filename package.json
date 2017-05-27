@@ -1,6 +1,6 @@
 {
   "name": "gendiff-234389",
-  "version": "0.0.85",
+  "version": "0.0.87",
   "description": "project-lvl2-s96",
   "main": "dist/index.js",
   "bin": {
