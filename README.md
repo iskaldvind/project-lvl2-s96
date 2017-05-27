@@ -12,13 +12,15 @@ npm install -g gendiff-234389
 
 gendiff [-f (tree|plain|json)] \<firstConfig> \<secondConfig>
 
-Compares two configuration files and shows a difference. Supported file types: json, ini, yml.
+Compares two configuration files and shows a difference.
+Supported file types: json, ini, yml.
+Supported output formats: tree (default), plain, json
 
 Options:
 
     -h, --help           output usage information
     -V, --version        output the version number
-    -f, --format [type]  output format: tree, plain, json
+    -f, --format [type]  output format
   
 Examples:
   
