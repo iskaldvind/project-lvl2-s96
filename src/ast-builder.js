@@ -27,16 +27,13 @@ const iterOverBuildDiffAST = (before, after) => {
         return { type: 'unchanged', property, oldValue: before[property], children: [] };
       }
       return { type: 'updated', property, newValue: after[property], oldValue: before[property], children: [] };
-    } else if (property in before) {
-      if (before[property] instanceof Object) {
-        return { type: 'removed', property, children: recursivelyMarkUnchanged(before[property]) };
-      }
-      return { type: 'removed', property, oldValue: before[property], children: [] };
     }
-    if (after[property] instanceof Object) {
-      return { type: 'added', property, children: recursivelyMarkUnchanged(after[property]) };
+    const [master, type, newValue, oldValue] = property in before ?
+      [before, 'removed', undefined, before[property]] : [after, 'added', after[property], undefined];
+    if (master[property] instanceof Object) {
+      return { type, property, children: recursivelyMarkUnchanged(master[property]) };
     }
-    return { type: 'added', property, newValue: after[property], children: [] };
+    return { type, property, newValue, oldValue, children: [] };
   });
 };
 
