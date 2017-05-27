@@ -2,7 +2,7 @@ import path from 'path';
 import fs from 'fs';
 import parseData from './data-parser';
 import buildDiffAST from './ast-builder';
-import outputAst from './ast-output';
+import outputAst from './ast-outputers';
 
 const readFile = file => fs.readFileSync(file, 'utf-8');
 
