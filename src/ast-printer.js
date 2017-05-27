@@ -8,18 +8,23 @@ const printTreeFormat = (treeFormatter, ast, level, status) => {
   const leadingIndent = level === 0 ? '' : `${currentBaseIndent}${statusIndent}`;
   const trailingIndent = level === 0 ? '' : `${currentBaseIndent}${treeIndents.unchanged}`;
   const groupAstProperty = ast.property === '' ? '{' : `${ast.property}: {`;
-  if (ast.children) {
+  if (ast.children.length) {
     return [
       `${leadingIndent}${groupAstProperty}`,
       ast.children.map(treeFormatter(level)),
       `${trailingIndent}}`,
     ];
-  } else if (ast.value instanceof Array) {
-    const realValue = status === 'added' ? ast.value[0] : ast.value[1];
-    return printTreeFormat(treeFormatter,
-      { type: status, property: ast.property, value: realValue }, level);
+  } else if (ast.type === 'updated') {
+    return printTreeFormat(treeFormatter, {
+      type: status,
+      property: ast.property,
+      newValue: ast.newValue,
+      oldValue: ast.oldValue,
+      children: ast.children },
+      level);
   }
-  return [`${leadingIndent}${ast.property}: ${ast.value}`];
+  const value = ast.type === 'added' ? ast.newValue : ast.oldValue;
+  return [`${leadingIndent}${ast.property}: ${value}`];
 };
 
 const printTreeCompose = (ast, level) => {
@@ -37,15 +42,15 @@ const printTree = ast => _.flattenDeep(printTreeCompose(ast, 0)).join('\n');
 
 const printPlainCompose = (ast, path) => {
   const chainedProperty = `${path}${ast.property}`;
-  if (ast.children) {
+  if (ast.children.length) {
     if (ast.type === 'added') {
       return [`Property '${chainedProperty}' was added with complex value`];
     } else if (ast.type === 'removed') {
       return [`Property '${chainedProperty}' was removed`];
     }
     return ast.children.map(child => printPlainCompose(child, `${chainedProperty === '' ? '' : `${chainedProperty}.`}`));
-  } else if (ast.value instanceof Array) {
-    const [newValue, oldValue] = [ast.value[0], ast.value[1]].map((value) => {
+  } else if (ast.type === 'updated') {
+    const [newValue, oldValue] = [ast.newValue, ast.oldValue].map((value) => {
       if (value instanceof Object) {
         return 'complex value';
       }
@@ -54,7 +59,7 @@ const printPlainCompose = (ast, path) => {
     return [`Property '${chainedProperty}' was updated. From ${oldValue} to ${newValue}`];
   }
   if (ast.type === 'added') {
-    return [`Property '${chainedProperty}' was added with value: ${ast.value}`];
+    return [`Property '${chainedProperty}' was added with value: ${ast.newValue}`];
   } else if (ast.type === 'removed') {
     return [`Property '${chainedProperty}' was removed`];
   }
