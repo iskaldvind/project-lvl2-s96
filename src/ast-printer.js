@@ -14,8 +14,8 @@ const printTreeFormat = (treeFormatter, ast, level, status) => {
       ast.children.map(treeFormatter(level)),
       `${trailingIndent}}`,
     ];
-  } else if (ast.newValue) {
-    const realValue = status === 'added' ? ast.newValue : ast.oldValue;
+  } else if (ast.value instanceof Array) {
+    const realValue = status === 'added' ? ast.value[0] : ast.value[1];
     return printTreeFormat(treeFormatter,
       { type: status, property: ast.property, value: realValue }, level);
   }
@@ -33,7 +33,7 @@ const printTreeCompose = (ast, level) => {
   return [printTreeFormat(treeFormatter, ast, level)];
 };
 
-export const printTree = ast => _.flattenDeep(printTreeCompose(ast, 0)).join('\n');
+const printTree = ast => _.flattenDeep(printTreeCompose(ast, 0)).join('\n');
 
 const printPlainCompose = (ast, path) => {
   const chainedProperty = `${path}${ast.property}`;
@@ -44,8 +44,8 @@ const printPlainCompose = (ast, path) => {
       return [`Property '${chainedProperty}' was removed`];
     }
     return ast.children.map(child => printPlainCompose(child, `${chainedProperty === '' ? '' : `${chainedProperty}.`}`));
-  } else if (ast.newValue) {
-    const [newValue, oldValue] = [ast.newValue, ast.oldValue].map((value) => {
+  } else if (ast.value instanceof Array) {
+    const [newValue, oldValue] = [ast.value[0], ast.value[1]].map((value) => {
       if (value instanceof Object) {
         return 'complex value';
       }
@@ -61,12 +61,16 @@ const printPlainCompose = (ast, path) => {
   return null;
 };
 
-export const printPlain = ast => _.flattenDeep(printPlainCompose(ast, '')).filter(item => item !== null).join('\n');
+const printPlain = ast => _.flattenDeep(printPlainCompose(ast, '')).filter(item => item !== null).join('\n');
+
+const printJSON = ast => JSON.stringify(ast);
 
 const printAst = (ast, format) => {
   switch (format) {
     case 'plain':
       return printPlain(ast);
+    case 'json':
+      return printJSON(ast);
     default:
       return printTree(ast);
   }
