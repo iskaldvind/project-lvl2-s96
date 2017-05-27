@@ -38,8 +38,6 @@ const printTreeCompose = (ast, level) => {
   return [printTreeFormat(treeFormatter, ast, level)];
 };
 
-const printTree = ast => _.flattenDeep(printTreeCompose(ast, 0)).join('\n');
-
 const printPlainCompose = (ast, path) => {
   const chainedProperty = `${path}${ast.property}`;
   if (ast.children.length) {
@@ -66,19 +64,18 @@ const printPlainCompose = (ast, path) => {
   return null;
 };
 
-const printPlain = ast => _.flattenDeep(printPlainCompose(ast, '')).filter(item => item !== null).join('\n');
-
-const printJSON = ast => JSON.stringify(ast);
-
-const printAst = (ast, format) => {
-  switch (format) {
-    case 'plain':
-      return printPlain(ast);
-    case 'json':
-      return printJSON(ast);
-    default:
-      return printTree(ast);
-  }
+const printers = {
+  plain(ast) {
+    return _.flattenDeep(printPlainCompose(ast, '')).filter(item => item !== null).join('\n');
+  },
+  json(ast) {
+    return JSON.stringify(ast);
+  },
+  tree(ast) {
+    return _.flattenDeep(printTreeCompose(ast, 0)).join('\n');
+  },
 };
+
+const printAst = format => ast => printers[format](ast);
 
 export default printAst;
