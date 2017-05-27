@@ -10,7 +10,7 @@ npm install -g gendiff-234389
 
 ## Usage:
 ```
-gendiff [-f (tree|plain|json)] \<firstConfig> \<secondConfig>
+gendiff [-f (tree|plain|json)] <firstConfig> <secondConfig>
 ```
 Compares two configuration files and shows a difference  
 Supported file types: **json**, **ini**, **yml**  
