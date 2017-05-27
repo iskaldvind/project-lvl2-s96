@@ -1,5 +1,5 @@
 import path from 'path';
-import gendiff from '../src/index';
+import gendiff from '../src';
 
 const validDiffFlatTree = [
   '{',

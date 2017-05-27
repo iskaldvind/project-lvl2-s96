@@ -3,7 +3,7 @@ import gendiff from './file-comparer';
 
 const main = () => {
   program
-    .version('0.0.87')
+    .version('0.0.88')
     .arguments('<firstConfig> <secondConfig>')
     .description('Compares two configuration files and shows a difference')
     .option('-f, --format [type]', 'output format', 'tree')
