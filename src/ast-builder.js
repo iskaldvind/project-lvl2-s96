@@ -15,13 +15,13 @@ const iterOverBuildDiffAST = (before, after) => {
     if ((property in before) && (property in after)) {
       if ((before[property] instanceof Object) && (after[property] instanceof Object)) {
         if (JSON.stringify(before[property]) === JSON.stringify(after[property])) {
-          return { type: 'unchanged', property, children: recursivelyMarkUnchanged(before[property]) };
+          return { type: 'unchanged', property, children: iterOverBuildDiffAST(before[property], after[property]) };
         }
         return { type: 'unchanged', property, children: iterOverBuildDiffAST(before[property], after[property]) };
       } else if (before[property] instanceof Object) {
-        return { type: 'updated', property, newValue: after[property], oldValue: recursivelyMarkUnchanged(before[property]), children: [] };
+        return { type: 'updated', property, newValue: after[property], oldValue: iterOverBuildDiffAST(before[property], after[property]), children: [] };
       } else if (after[property] instanceof Object) {
-        return { type: 'updated', property, newValue: recursivelyMarkUnchanged(after[property]), oldValue: before[property], children: [] };
+        return { type: 'updated', property, newValue: iterOverBuildDiffAST(after[property], before[property]), oldValue: before[property], children: [] };
       }
       if (before[property] === after[property]) {
         return { type: 'unchanged', property, oldValue: before[property], children: [] };
