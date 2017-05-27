@@ -1,4 +1,5 @@
 import path from 'path';
+import fs from 'fs';
 import gendiff from '../src';
 
 const validDiffFlatTree = [
@@ -53,6 +54,8 @@ const validDiffComplexPlain = [
   "Property 'group3' was added with complex value",
 ].join('\n');
 
+const validJSON = JSON.parse(fs.readFileSync('./__tests__/__fixtures__/json-diff.json', 'utf-8'));
+
 const fixturesDir = './__tests__/__fixtures__/';
 
 test('Should make valid Tree output with flat ini files', () => {
@@ -102,10 +105,9 @@ test('Should make valid Plain output with complex json files', () => {
   const jsonAfter = path.join(fixturesDir, 'complex-after.json');
   expect(gendiff(jsonBefore, jsonAfter, 'plain')).toEqual(validDiffComplexPlain);
 });
-/*
+
 test('Should make valid JSON output with complex json files', () => {
   const jsonBefore = path.join(fixturesDir, 'complex-before.json');
   const jsonAfter = path.join(fixturesDir, 'complex-after.json');
-  expect(gendiff(jsonBefore, jsonAfter, 'json')).toEqual('');
+  expect(gendiff(jsonBefore, jsonAfter, 'json')).toEqual(validJSON);
 });
-*/

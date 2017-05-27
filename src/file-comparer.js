@@ -12,6 +12,7 @@ const gendiff = (fileBefore, fileAfter, format = 'tree') => {
   const extension = path.extname(fileBefore).slice(1);
   const [dataBefore, dataAfter] = parseData(extension)(rawData);
   const diffAST = buildDiffAST(dataBefore, dataAfter);
+  // console.log(diffAST);
   return printAst(format)(diffAST);
 };
 

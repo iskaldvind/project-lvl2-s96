@@ -40,7 +40,6 @@ const iterOverBuildDiffAST = (before, after) => {
   });
 };
 
-const buildDiffAST = (dataBefore, dataAfter) =>
-  ({ type: 'unchanged', property: '', children: iterOverBuildDiffAST(dataBefore, dataAfter) });
+const buildDiffAST = (dataBefore, dataAfter) => iterOverBuildDiffAST(dataBefore, dataAfter);
 
 export default buildDiffAST;

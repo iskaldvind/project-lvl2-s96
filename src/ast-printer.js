@@ -3,11 +3,11 @@ import _ from 'lodash';
 const treeIndents = { base: '    ', unchanged: '    ', added: '  + ', removed: '  - ' };
 
 const printTreeFormat = (treeFormatter, ast, level, status) => {
-  const currentBaseIndent = treeIndents.base.repeat(level === 0 ? level : level - 1);
+  const currentBaseIndent = treeIndents.base.repeat(level - 1);
   const statusIndent = ast.type === 'updated' ? treeIndents[status] : treeIndents[ast.type];
-  const leadingIndent = level === 0 ? '' : `${currentBaseIndent}${statusIndent}`;
-  const trailingIndent = level === 0 ? '' : `${currentBaseIndent}${treeIndents.unchanged}`;
-  const groupAstProperty = ast.property === '' ? '{' : `${ast.property}: {`;
+  const leadingIndent = `${currentBaseIndent}${statusIndent}`;
+  const trailingIndent = `${currentBaseIndent}${treeIndents.unchanged}`;
+  const groupAstProperty = `${ast.property}: {`;
   if (ast.children.length) {
     return [
       `${leadingIndent}${groupAstProperty}`,
@@ -64,15 +64,32 @@ const printPlainCompose = (ast, path) => {
   return null;
 };
 
+const printJSON = (ast) => {
+  if (!ast.children.length) {
+    if (ast.type === 'updated') {
+      const [newValue, oldValue] = [ast.newValue, ast.oldValue].map((value) => {
+        if (value instanceof Object) {
+          return printJSON(value);
+        }
+        return value;
+      });
+      return `"${ast.property}": {"status": "${ast.type}", "newValue": "${newValue}", "oldValue": "${oldValue}"}`;
+    }
+    const [realValueStr, realValue] = ast.type === 'added' ? ['newValue', ast.newValue] : ['oldValue', ast.oldValue];
+    return `"${ast.property}": {"status": "${ast.type}", "${realValueStr}": "${realValue}"}`;
+  }
+  return `"${ast.property}": {"status": "${ast.type}", "children": {${ast.children.map(child => printJSON(child))}}}`;
+};
+
 const printers = {
   plain(ast) {
-    return _.flattenDeep(printPlainCompose(ast, '')).filter(item => item !== null).join('\n');
+    return _.flattenDeep(ast.map(shrub => printPlainCompose(shrub, ''))).filter(item => item !== null).join('\n');
   },
   json(ast) {
-    return JSON.stringify(ast);
+    return JSON.parse(`{${ast.map(shrub => printJSON(shrub)).join(',')}}`);
   },
   tree(ast) {
-    return _.flattenDeep(printTreeCompose(ast, 0)).join('\n');
+    return ['{', ..._.flattenDeep(ast.map(shrubs => printTreeCompose(shrubs, 1))), '}'].join('\n');
   },
 };
 
