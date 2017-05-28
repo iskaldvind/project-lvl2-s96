@@ -1,4 +1,6 @@
-const outputPlain = (ast, path) => {
+import _ from 'lodash';
+
+const outputPlainCompose = (ast, path) => {
   const chainedProperty = `${path}${ast.property}`;
   if (ast.children.length > 0) {
     if (ast.type === 'added') {
@@ -6,7 +8,8 @@ const outputPlain = (ast, path) => {
     } else if (ast.type === 'removed') {
       return [`Property '${chainedProperty}' was removed`];
     }
-    return ast.children.map(child => outputPlain(child, `${chainedProperty === '' ? '' : `${chainedProperty}.`}`));
+    return ast.children
+      .map(child => outputPlainCompose(child, `${chainedProperty === '' ? '' : `${chainedProperty}.`}`));
   } else if (ast.type === 'updated') {
     const [newValue, oldValue] = [ast.newValue, ast.oldValue].map((value) => {
       if (value instanceof Object) {
@@ -23,5 +26,8 @@ const outputPlain = (ast, path) => {
   }
   return null;
 };
+
+const outputPlain = ast =>
+  _.flattenDeep(ast.map(shrub => outputPlainCompose(shrub, ''))).filter(item => item !== null).join('\n');
 
 export default outputPlain;

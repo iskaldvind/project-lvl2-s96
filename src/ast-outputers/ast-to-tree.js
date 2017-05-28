@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 const treeIndents = { base: '    ', unchanged: '    ', added: '  + ', removed: '  - ' };
 
 const outputTreeFormat = (treeFormatter, ast, level, status) => {
@@ -25,8 +27,8 @@ const outputTreeFormat = (treeFormatter, ast, level, status) => {
   return [`${leadingIndent}${ast.property}: ${value}`];
 };
 
-const outputTree = (ast, level) => {
-  const treeFormatter = currentLevel => child => outputTree(child, currentLevel + 1);
+const outputTreeCompose = (ast, level) => {
+  const treeFormatter = currentLevel => child => outputTreeCompose(child, currentLevel + 1);
   if (ast.type === 'updated') {
     return [
       outputTreeFormat(treeFormatter, ast, level, 'added'),
@@ -35,5 +37,7 @@ const outputTree = (ast, level) => {
   }
   return [outputTreeFormat(treeFormatter, ast, level)];
 };
+
+const outputTree = ast => ['{', ..._.flattenDeep(ast.map(shrubs => outputTreeCompose(shrubs, 1))), '}'].join('\n')
 
 export default outputTree;
