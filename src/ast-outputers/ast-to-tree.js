@@ -38,6 +38,6 @@ const outputTreeCompose = (ast, level) => {
   return [outputTreeFormat(treeFormatter, ast, level)];
 };
 
-const outputTree = ast => ['{', ..._.flattenDeep(ast.map(shrubs => outputTreeCompose(shrubs, 1))), '}'].join('\n')
+const outputTree = ast => ['{', ..._.flattenDeep(ast.map(shrubs => outputTreeCompose(shrubs, 1))), '}'].join('\n');
 
 export default outputTree;
