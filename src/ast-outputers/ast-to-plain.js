@@ -4,9 +4,9 @@ const outputPlainCompose = (ast, path) => {
   const chainedProperty = `${path}${ast.property}`;
   if (ast.children.length > 0) {
     if (ast.type === 'added') {
-      return [`Property '${chainedProperty}' was added with complex value`];
+      return `Property '${chainedProperty}' was added with complex value`;
     } else if (ast.type === 'removed') {
-      return [`Property '${chainedProperty}' was removed`];
+      return `Property '${chainedProperty}' was removed`;
     }
     return ast.children
       .map(child => outputPlainCompose(child, `${chainedProperty === '' ? '' : `${chainedProperty}.`}`));
@@ -17,12 +17,12 @@ const outputPlainCompose = (ast, path) => {
       }
       return `'${value}'`;
     });
-    return [`Property '${chainedProperty}' was updated. From ${oldValue} to ${newValue}`];
+    return `Property '${chainedProperty}' was updated. From ${oldValue} to ${newValue}`;
   }
   if (ast.type === 'added') {
-    return [`Property '${chainedProperty}' was added with value: ${ast.newValue}`];
+    return `Property '${chainedProperty}' was added with value: ${ast.newValue}`;
   } else if (ast.type === 'removed') {
-    return [`Property '${chainedProperty}' was removed`];
+    return `Property '${chainedProperty}' was removed`;
   }
   return null;
 };

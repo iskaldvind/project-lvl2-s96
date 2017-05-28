@@ -24,7 +24,7 @@ const outputTreeFormat = (treeFormatter, ast, level, status) => {
       level);
   }
   const value = ast.type === 'added' ? ast.newValue : ast.oldValue;
-  return [`${leadingIndent}${ast.property}: ${value}`];
+  return `${leadingIndent}${ast.property}: ${value}`;
 };
 
 const outputTreeCompose = (ast, level) => {
@@ -35,7 +35,7 @@ const outputTreeCompose = (ast, level) => {
       outputTreeFormat(treeFormatter, ast, level, 'removed'),
     ];
   }
-  return [outputTreeFormat(treeFormatter, ast, level)];
+  return outputTreeFormat(treeFormatter, ast, level);
 };
 
 const outputTree = ast => ['{', ..._.flattenDeep(ast.map(shrubs => outputTreeCompose(shrubs, 1))), '}'].join('\n');
